@@ -2,10 +2,7 @@ package net.engineeringdigest.journalApp.controller;
 
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +20,23 @@ class JournalEntryController {
         return new ArrayList<>(journalEntries.values());
     }
     @PostMapping
-    public void createEntry(){ //localhost:8080/journal Post
+    public boolean createEntry(@RequestBody JournalEntry myEntry){ //localhost:8080/journal Post
+        journalEntries.put(myEntry.getId(), myEntry);
+        return true;
+    }
 
+    @GetMapping("id/{myId}")
+    public JournalEntry getJournalEntryById(@PathVariable Long myId){
+        return journalEntries.get(myId);
+    }
+
+    @DeleteMapping("id/{myId}")
+    public JournalEntry deleteJournalEntryById(@PathVariable Long myId){
+        return journalEntries.remove(myId);
+    }
+
+    @PutMapping("id/{id}")
+    public JournalEntry updateJournalById(@PathVariable Long id,@RequestBody JournalEntry myEntry){
+        return journalEntries.put(id, myEntry);
     }
 }
