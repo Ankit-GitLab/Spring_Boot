@@ -22,7 +22,7 @@ public class User {
 
     @Indexed(unique = true)
     @NonNull
-    private String user;
+    private String userName;
     @NonNull
     private String password;
     @DBRef
