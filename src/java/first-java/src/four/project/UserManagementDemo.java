@@ -8,14 +8,14 @@ public class UserManagementDemo {
 //        User user1 = new User(true,"Alice", user1Roles);
 
         List<User> users = new ArrayList<>();
-        users.add(new User(true,"Alice",
+        users.add(new User(true,"Ankit",
                 new HashSet<>(Arrays.asList("ADMIN", "USER"))));
 
-        users.add(new User(false,"Bob",
+        users.add(new User(false,"Moto",
                 new HashSet<>(Arrays.asList("USER"))));
 
-        users.add(new User(true,"Charlie",
-                new HashSet<>(Arrays.asList("USER"))));
+        users.add(new User(true,"Daksha",
+                new HashSet<>(Arrays.asList("MANAGE"))));
 
         // REMOVE INACTIVE USERS
         Iterator<User> iterator = users.iterator();
