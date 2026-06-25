@@ -23,6 +23,7 @@ public class GenericsDemo {
         System.out.println("All Users");
         for (Object user : users) {
             System.out.println(user);
+            System.out.println("Manager");
         }
 
         System.out.println("Element using index: " + users.get(3));
