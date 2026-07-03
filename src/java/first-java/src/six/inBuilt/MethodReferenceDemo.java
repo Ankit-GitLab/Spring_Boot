@@ -26,6 +26,8 @@ public class MethodReferenceDemo {
             }
         }); */
 
-        names.forEach((name) -> System.out.println(name));
+        /*names.forEach((name) -> System.out.println(name));*/
+
+        names.forEach(System.out::println);
     }
 }
