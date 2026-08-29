@@ -1,0 +1,25 @@
+package com.demo.first;
+
+import com.demo.first.app.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello World!";
+    }
+
+//    @GetMapping("/user")
+    @RequestMapping(value = "/user", method = {RequestMethod.GET, RequestMethod.POST})
+    public User getUser(){
+        User user = new User(1, "Moto","ankitrocky480@gmail.com");
+        return user;
+    }
+
+}
