@@ -1,89 +1,129 @@
+
 package com.demo.first.app;
 
-import org.apache.coyote.Response;
+import com.demo.first.app.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService = new UserService();
+
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    // CREATE USER
     @PostMapping
-    public ResponseEntity<User> creating (@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+
         User createdUser = userService.createUser(user);
+
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+
+    // UPDATE USER
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user){
-        User updated = userService.updateUser(user);
-        if(updated == null)
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+
+        User updatedUser = userService.updateUser(user);
+
+        if (updatedUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(updated);
+        }
+
+        return ResponseEntity.ok(updatedUser);
     }
 
+
+    // DELETE USER
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id){
-        if(!userDb.containsKey(id))
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+
+        boolean isDeleted = userService.deleteUser(id);
+
+        if (!isDeleted) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        userDb.remove(id);
-//        return ResponseEntity.ok("user Deleted");
+        }
+
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping({"users", "/user/{id}"})
 
+    // GET ALL USERS
     @GetMapping
-    public List<User> getUsers(){
-        return new ArrayList<>(userDb.values());
+    public ResponseEntity<List<User>> getUsers() {
+
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable(value = "userId" , required = false) int id){
-        if(!userDb.containsKey(id))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(userDb.get(id));
-    }
 
-    @GetMapping("/{userId}/order/{orderId}")
-    public ResponseEntity<User> getUserOrser(@PathVariable("userId") int id){
-        if(!userDb.containsKey(id))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(userDb.get(id));
-    }
-
-    //search?name=john
+    // SEARCH USER
+    // Example: /user/search?name=john&email=john@gmail.com
     @GetMapping("/search")
     public ResponseEntity<List<User>> searchUser(
-            @RequestParam(required = false, defaultValue ="moto") String name,
-            @RequestParam(required = false, defaultValue ="email@gmail.com") String email
-    ){
-        System.out.println(name);
-        List<User> users = userDb.values().stream()
-                .filter(u -> u.getName().equalsIgnoreCase(name))
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .toList();
-        return ResponseEntity.ok(new ArrayList<>(userDb.values()));
+            @RequestParam String name,
+            @RequestParam String email
+    ) {
+
+        return ResponseEntity.ok(
+                userService.searchUsers(name, email)
+        );
     }
 
+
+    // GET USER INFO
+    // Example: /user/info/1?name=Ankit
     @GetMapping("/info/{id}")
     public String getInfo(
             @PathVariable int id,
             @RequestParam String name,
-            @RequestHeader("User-Agent") String userAgent){
-        return "user Agent: " + userAgent
-                +" : " +id
-                +" : " +name;
+            @RequestHeader("User-Agent") String userAgent
+    ) {
+
+        return "User Agent: " + userAgent
+                + " | ID: " + id
+                + " | Name: " + name;
+    }
+
+
+    // GET USER BY ID
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(
+            @PathVariable int userId
+    ) {
+
+        User user = userService.getUserById(userId);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
+
+    // GET USER WITH ORDER
+    // Example: /user/1/order/101
+    @GetMapping("/{userId}/order/{orderId}")
+    public ResponseEntity<User> getUserOrder(
+            @PathVariable int userId,
+            @PathVariable int orderId
+    ) {
+
+        User user = userService.getUserById(userId);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(user);
     }
 }
+
