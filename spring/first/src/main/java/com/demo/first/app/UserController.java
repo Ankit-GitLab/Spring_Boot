@@ -1,11 +1,10 @@
 package com.demo.first.app;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,7 +14,26 @@ public class UserController {
 
     @PostMapping
     public String creating (@RequestBody User user){
-        userDb.put(user.getId(), user);
+        System.out.println(user.getEmail());
+        userDb.putIfAbsent(user.getId(), user);
         return "User Created";
+    }
+
+    @PutMapping
+    public String updateUser(@RequestBody User user){
+        if(userDb.containsKey(user.getId()))
+            userDb.put(user.getId(), user);
+        return "Update successful";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable int id){
+        userDb.remove(id);
+        return "User deleted";
+    }
+
+    @GetMapping
+    public List<User> getUsers(){
+        return new ArrayList<>(userDb.values());
     }
 }
