@@ -9,57 +9,45 @@ import java.util.Map;
 
 @Service
 public class UserService {
-
     private final Map<Integer, User> userDb = new HashMap<>();
 
 
     // CREATE USER
     public User createUser(User user) {
-
         System.out.println(user.getEmail());
-
         userDb.put(user.getId(), user);
-
         return user;
     }
 
 
     // UPDATE USER
     public User updateUser(User user) {
-
         if (!userDb.containsKey(user.getId())) {
-            return null;
+            throw new IllegalArgumentException("User with ID" +user.getId()+"does not exist");
         }
-
         userDb.put(user.getId(), user);
-
         return user;
     }
 
 
     // DELETE USER
     public boolean deleteUser(int id) {
-
         if (!userDb.containsKey(id)) {
             return false;
         }
-
         userDb.remove(id);
-
         return true;
     }
 
 
     // GET ALL USERS
     public List<User> getAllUsers() {
-
         return new ArrayList<>(userDb.values());
     }
 
 
     // GET USER BY ID
     public User getUserById(int id) {
-
         return userDb.get(id);
     }
 
