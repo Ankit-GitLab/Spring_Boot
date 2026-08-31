@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -96,15 +99,11 @@ public class UserController {
     // GET USER BY ID
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(
-            @PathVariable int userId
-    ) {
-
+            @PathVariable int userId) {
         User user = userService.getUserById(userId);
-
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
         return ResponseEntity.ok(user);
     }
 
@@ -114,16 +113,31 @@ public class UserController {
     @GetMapping("/{userId}/order/{orderId}")
     public ResponseEntity<User> getUserOrder(
             @PathVariable int userId,
-            @PathVariable int orderId
-    ) {
-
+            @PathVariable int orderId) {
         User user = userService.getUserById(userId);
-
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
         return ResponseEntity.ok(user);
     }
+
+    // EXCEPTION HANDLING METHOD
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException exception){
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("timestamp", LocalDateTime.now());
+        errorResponse.put("status",HttpStatus.BAD_REQUEST.value());
+        errorResponse.put("error","Bad request");
+        errorResponse.put("message",exception.getMessage());
+        return new  ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
+/*
+* {
+    "timestamp": "2026-08-31T05:32:40.687Z",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/user"
+}
+* */
 

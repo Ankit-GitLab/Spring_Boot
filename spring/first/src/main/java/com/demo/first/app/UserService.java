@@ -23,7 +23,7 @@ public class UserService {
     // UPDATE USER
     public User updateUser(User user) {
         if (!userDb.containsKey(user.getId())) {
-            throw new IllegalArgumentException("User with ID" +user.getId()+"does not exist");
+            throw new IllegalArgumentException("User with ID" +user.getId() + " does not exist");
         }
         userDb.put(user.getId(), user);
         return user;
