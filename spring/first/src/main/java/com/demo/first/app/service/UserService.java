@@ -1,5 +1,6 @@
-package com.demo.first.app;
+package com.demo.first.app.service;
 
+import com.demo.first.app.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class UserService {
 
     // GET ALL USERS
     public List<User> getAllUsers() {
+        if(userDb.isEmpty())
+            throw new NullPointerException("No users found in the database");
         return new ArrayList<>(userDb.values());
     }
 
