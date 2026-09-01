@@ -15,7 +15,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     // EXCEPTION HANDLING METHOD
-    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+    @ExceptionHandler({UserNotFoundException.class,IllegalArgumentException.class, NullPointerException.class})
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(Exception exception){
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("timestamp", LocalDateTime.now());
@@ -43,4 +43,11 @@ public class GlobalExceptionHandler {
         errorResponse.put("message",exception.getMessage());
         return new  ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
+    /*
+    * {
+    "error": "method not allowed on this end point",
+    "message": "Request method 'POST' is not supported",
+    "timestamp": "2026-08-31T13:04:10.7653568",
+    "status": 405
+}*/
 }

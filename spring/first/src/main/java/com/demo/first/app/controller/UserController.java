@@ -3,6 +3,7 @@ package com.demo.first.app.controller;
 
 import com.demo.first.app.model.User;
 import com.demo.first.app.service.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private  UserService userService = new UserService();
+
 
     public UserController(UserService userService) {
         this.userService = userService;

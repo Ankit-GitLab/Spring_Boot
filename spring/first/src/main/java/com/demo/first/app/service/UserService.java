@@ -1,5 +1,6 @@
 package com.demo.first.app.service;
 
+import com.demo.first.app.exceptions.UserNotFoundException;
 import com.demo.first.app.model.User;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserService {
     // UPDATE USER
     public User updateUser(User user) {
         if (!userDb.containsKey(user.getId())) {
-            throw new IllegalArgumentException("User with ID" +user.getId() + " does not exist");
+            throw new UserNotFoundException("User with ID" +user.getId() + " does not exist");
         }
         userDb.put(user.getId(), user);
         return user;
@@ -34,7 +35,7 @@ public class UserService {
     // DELETE USER
     public boolean deleteUser(int id) {
         if (!userDb.containsKey(id)) {
-            return false;
+            throw new UserNotFoundException("User with ID"+ id +" does not exist");
         }
         userDb.remove(id);
         return true;
