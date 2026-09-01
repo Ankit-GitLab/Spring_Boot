@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 public class UserController {
 
     private  UserService userService = new UserService();
-
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
