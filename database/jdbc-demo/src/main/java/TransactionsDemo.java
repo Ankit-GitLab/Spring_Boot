@@ -12,9 +12,16 @@ public class TransactionsDemo {
             System.out.println("Connected to the database!");
 
             // Order, OrderItems
+            // INSER INTO ORDER
+            int orderId = insertOrder(conn, 101, "ANKIT", 2000.0);
 
+            // INSERT INTO ORDER ITEM
+            inserOrderItem(conn, orderId, "Laptop01", 1, 2000.0);
         }catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private static int insertOrder(Connection conn, int i, String ankit, double v) {
     }
 }
