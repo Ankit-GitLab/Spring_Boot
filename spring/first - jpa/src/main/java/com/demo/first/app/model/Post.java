@@ -9,6 +9,6 @@ public class Post {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
 }

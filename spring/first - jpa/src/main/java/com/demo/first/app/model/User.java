@@ -20,7 +20,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     public Profile profile;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> post;
 
 
