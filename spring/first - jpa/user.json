@@ -1,0 +1,26 @@
+{
+  "name": "Ankit",
+  "email": "ankit@example.com",
+  "profile": {
+    "bio": "Java Developer",
+    "phone": "6207000824"
+  },
+  "posts": [
+    {
+      "title": "Learning JPA Relationships",
+      "content": "JPA makes complex data models simple!",
+      "tags": [
+        {"name": "JPA"},
+        {"name": "SpringBoot"}
+      ]
+    },
+    {
+      "title": "Understanding Cascade in Hibernate",
+      "content": "CascadeType.ALL is super powerful!",
+      "tags": [
+        {"name": "Hibernate"},
+        {"name": "Persistence"}
+      ]
+    }
+  ]
+}
