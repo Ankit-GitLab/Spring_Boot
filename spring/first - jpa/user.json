@@ -7,7 +7,7 @@
   },
   "posts": [
     {
-      "title": "Learning JPA Relationships",
+      "title": "Learning react Relationships",
       "content": "JPA makes complex data models simple!",
       "tags": [
         {"name": "JPA"},
